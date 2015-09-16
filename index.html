@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title> File API Saskia Isabel Schweneneker </title>
+
+		<meta name="description" content="Eine Standardmethode zur Interaktion mit lokalen Dateien">
+		<meta name="author" content="Saskia Isabel Schweneker">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>File API</h1>
+                    <hr/>
+					<h3>Interaktion mit lokalen Dateien</h3>
+					<p>
+                        <middle> erstellt von Saskia Isabel Schweneker </middle> 
+                    </p>
+				</section>
+                <section>
+                <h3> API </h3>
+                    <hr/>
+                    <p> - API = Application Programming Interface <br/></p>
+                    <p> 
+                     - eine der fünf grundlegenden Anforderungen an Betreibssysteme </p>
+                    <p>- ermöglicht Anbindung an das Betriebssystem <br/> </p>
+                     - Programmierschnittstelle auf Quellext-Ebene  <br/>  <p>   
+                    </p>
+                </section>
+                <section> 
+                <h3> File API </h3>
+                    <hr/>
+                    <P> - auf lokale Dateien zugreifen und diese in HTML darstellen</P>
+                    <p>- Einführung mit HTML5 </p>
+                    <p>- z.Bsp. Dateien vor Upload im Browserfenster darstellen </p> <p> - nur Zugriff auf bereits ausgewählte Dateien </p>
+
+                </section>
+                <section>
+                <h3>  File API </h3>   
+                    <hr/>
+                 
+ <h3> File: </h3> <p> </p> - einzelne Datei <br/>                 - stellt schreibgeschützte Informationen (Name, Dateigröße, Mimetyp, Verweis auf den Dateihandle) bereit </p>
+                <h3> FileList: </h3> <p> - arrayartige Folge von File-Objekten. (input type="file" multiple) </p>
+     <h3> Blob: </h3> <p> - ermöglicht Unterteilen einer Datei in Bytebereiche </p>
+                    </section>
+         <section>          
+        
+                    <section>
+
+                    Bei Verwendung in Verbindung mit den obigen Datenstrukturen kann die FileReader-Schnittstelle dazu genutzt werden, eine Datei über die vertraute JavaScript-Ereignisbehandlung asynchron zu lesen. Dadurch können Sie den Fortschritt eines Lesevorgangs überwachen, Fehler ermitteln und feststellen, wann ein Ladevorgang abgeschlossen ist. 
+                    <br/>
+                <br/>
+                    </p>
+                </section>
+
+				<section>
+					<h2>Beispiele Datei hochladen</h2> 
+                    <h3>Auswahl per Formulareingabe</h3>
+					<p>
+-> Verwendung eines Standardelements vom Typ input type="file" -> JavaScript gibt die Liste der ausgewählten File-Objekte als FileList zurück
+                    </p>
+            </section>
+            <!-- Folie 2 -->
+            <section> 
+                
+               <p> <input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate.toLocaleDateString(), '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+                   <img src= "Beispiel.png"> <br/> </p>
+                </section>
+                <section>
+                
+                    <input accept="image/jpeg" type="file" id="files2" name="files[]" multiple />
+<output id="list2"></output> 
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate.toLocaleDateString(), '</li>');
+    }
+    document.getElementById('list2').innerHTML = '<ol>' + output.join('') + '</ol>';
+  }
+
+  document.getElementById('files2').addEventListener('change', handleFileSelect, false);
+</script>
+                    
+				</section>
+            <section> 
+            <div id="drop_zone">Drop files here</div>
+<output id="list3"></output>
+
+<script>
+  function handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    var files = evt.dataTransfer.files; // FileList object.
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate.toLocaleDateString(), '</li>');
+    }
+    document.getElementById('list3').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+  }
+
+  // Setup the dnd listeners.
+  var dropZone = document.getElementById('drop_zone');
+  dropZone.addEventListener('dragover', handleDragOver, false);
+  dropZone.addEventListener('drop', handleFileSelect, false);
+</script>
+            
+            </section>
+            <section> 
+            <style>
+  #progress_bar {
+    margin: 10px 0;
+    padding: 3px;
+    border: 1px solid #000;
+    font-size: 14px;
+    clear: both;
+    opacity: 0;
+    -moz-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    -webkit-transition: opacity 1s linear;
+  }
+  #progress_bar.loading {
+    opacity: 1.0;
+  }
+  #progress_bar .percent {
+    background-color: #99ccff;
+    height: auto;
+    width: 0;
+  }
+</style>
+
+<input type="file" id="files4" name="file" />
+<button onclick="abortRead();">Cancel read</button>
+<div id="progress_bar"><div class="percent">0%</div></div>
+
+<script>
+  var reader;
+  var progress = document.querySelector('.percent');
+
+  function abortRead() {
+    reader.abort();
+  }
+
+  function errorHandler(evt) {
+    switch(evt.target.error.code) {
+      case evt.target.error.NOT_FOUND_ERR:
+        alert('File Not Found!');
+        break;
+      case evt.target.error.NOT_READABLE_ERR:
+        alert('File is not readable');
+        break;
+      case evt.target.error.ABORT_ERR:
+        break; // noop
+      default:
+        alert('An error occurred reading this file.');
+    };
+  }
+
+  function updateProgress(evt) {
+    // evt is an ProgressEvent.
+    if (evt.lengthComputable) {
+      var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+      // Increase the progress bar length.
+      if (percentLoaded < 100) {
+        progress.style.width = percentLoaded + '%';
+        progress.textContent = percentLoaded + '%';
+      }
+    }
+  }
+
+  function handleFileSelect(evt) {
+    // Reset progress indicator on new file selection.
+    progress.style.width = '0%';
+    progress.textContent = '0%';
+
+    reader = new FileReader();
+    reader.onerror = errorHandler;
+    reader.onprogress = updateProgress;
+    reader.onabort = function(e) {
+      alert('File read cancelled');
+    };
+    reader.onloadstart = function(e) {
+      document.getElementById('progress_bar').className = 'loading';
+    };
+    reader.onload = function(e) {
+      // Ensure that the progress bar displays 100% at the end.
+      progress.style.width = '100%';
+      progress.textContent = '100%';
+      setTimeout("document.getElementById('progress_bar').className='';", 2000);
+    }
+
+    // Read in the image file as a binary string.
+    reader.readAsBinaryString(evt.target.files[0]);
+  }
+
+  document.getElementById('files4').addEventListener('change', handleFileSelect, false);
+</script>
+            
+            </section>
+            </section>
+
+			
+				<section style="text-align: left;">
+					<h1>THE END</h1>
+					<p>
+						- <a href="http://slides.com">Try the online editor</a> <br>
+						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+					</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
