@@ -49,17 +49,17 @@
                     </p>
 				</section>
                 <section>
-                <h3> API </h3>
+                <h3> API - What, Why </h3>
                     <hr/>
-                    <p> - API = Application Programming Interface <br/></p>
-                    <p> 
-                     - eine der fünf grundlegenden Anforderungen an Betreibssysteme </p>
-                    <p>- ermöglicht Anbindung an das Betriebssystem <br/> </p>
-                     - Programmierschnittstelle auf Quellext-Ebene  <br/>  <p>   
+                    <p> - API = Application Programming Interface </br>
+                    
+                - eine der fünf grundlegenden Anforderungen an Betreibssysteme                 </br>
+                    - ermöglicht Anbindung an das Betriebssystem <br/> 
+                     - Programmierschnittstelle auf Quellext-Ebene  <br/>   
                     </p>
                 </section>
                 <section> 
-                <h3> File API </h3>
+                <h3> File API - What, Why </h3>
                     <hr/>
                     <P> - auf lokale Dateien zugreifen und diese in HTML darstellen</P>
                     <p>- Einführung mit HTML5 </p>
@@ -67,84 +67,96 @@
 
                 </section>
                 <section>
-                <h3>  File API </h3>   
+                <h3>  File API - What </h3>   
                     <hr/>
                  
  <h3> File: </h3> <p> </p> - einzelne Datei <br/>                 - stellt schreibgeschützte Informationen (Name, Dateigröße, Mimetyp, Verweis auf den Dateihandle) bereit </p>
                 <h3> FileList: </h3> <p> - arrayartige Folge von File-Objekten. (input type="file" multiple) </p>
      <h3> Blob: </h3> <p> - ermöglicht Unterteilen einer Datei in Bytebereiche </p>
-                    </section>
-         <section>          
+    </section>        
         
                     <section>
-<h3> Vorraussetzung </h3>
-- FileReader-Schnittstelle dazu nutzten werden um eine Datei über JavaScript-Ereignisbehandlung asynchron zu lesen
+<h3> Voraussetzung - How </h3>
+                        <hr/>
+- FileReader-Schnittstelle nutzten um eine Datei über JavaScript-Ereignisbehandlung asynchron zu lesen
                     <br/>
-                <br/>
+                
                     </p>
                 </section>
-
-				<section>
-					<h2>Beispiele Datei hochladen</h2> 
-                    <h3>Auswahl per Formulareingabe</h3>
-					<p>
--> Verwendung eines Standardelements vom Typ input type="file" -> JavaScript gibt die Liste der ausgewählten File-Objekte als FileList zurück
-                    </p>
-            </section>
+<section>  
+            <section>
+<h3> Realisierung - How </h3>
+                <hr/>
+                </section>
             <!-- Folie 2 -->
             <section> 
                 
+                <h3>Auswahl per Formulareingabe - How </h3>  
+                <hr/>
                <p> <input type="file" id="files" name="files[]" multiple />
 <output id="list"></output>
 
-<script>
-  function handleFileSelect(evt) {
+    <script>
+    function handleFileSelect(evt) 
+{
     var files = evt.target.files; // FileList object
 
     // files is a FileList of File objects. List some properties.
     var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+    for (var i = 0, f; f = files[i]; i++)  
+    {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type ||                       'n/a', ') - ',
                   f.size, ' bytes, last modified: ',
                   f.lastModifiedDate.toLocaleDateString(), '</li>');
     }
     document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-  }
+}
 
   document.getElementById('files').addEventListener('change', handleFileSelect, false);
 </script>
-                   <img src= "Beispiel.png"> <br/> </p>
+    
+                   <img src= "Beispiel.png"> </p> 
                 </section>
                 <section>
-                
+                <h3> Auswahl per Formulareingabe eingeschränkt - How </h3>
+                    <hr/>
+                    <p>input accept="image/jpeg" type="file" id="files2" name="files[]" multiple </p>
+<output id="list2"></output> 
+                    
                     <input accept="image/jpeg" type="file" id="files2" name="files[]" multiple />
 <output id="list2"></output> 
 
 <script>
-  function handleFileSelect(evt) {
-    var files = evt.target.files; // FileList object
-
-    // files is a FileList of File objects. List some properties.
-    var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+       function handleFileSelect(evt) 
+{
+          var files = evt.target.files; // FileList object
+          // files is a FileList of File objects. List some properties.
+          var output = [];
+        
+    for (var i = 0, f; f = files[i]; i++) 
+    {
+                 output.push('<li><strong>', escape(f.name), '</strong> (',                     f.type || 'n/a', ') - ',
                   f.size, ' bytes, last modified: ',
                   f.lastModifiedDate.toLocaleDateString(), '</li>');
     }
-    document.getElementById('list2').innerHTML = '<ol>' + output.join('') + '</ol>';
+     document.getElementById('list2').innerHTML = '<ol>' + output.join('') +        '</ol>';
   }
 
   document.getElementById('files2').addEventListener('change', handleFileSelect, false);
 </script>
                     
-				</section>
-            <section> 
-                <h3> Verwenden von Drag and Drop für die Auswahl </h3>
-            <div id="drop_zone">Drop files here</div>
+</section>
+<section> 
+                <h3> Verwenden von Drag and Drop für die Auswahl - How </h3>
+    <hr/>
+            
+    
+    <div id="drop_zone">Drop files here</div>
 <output id="list3"></output>
 
 <script>
-  function handleFileSelect(evt) {
+  function handleFileSelect(evt) 
+{
     evt.stopPropagation();
     evt.preventDefault();
 
@@ -152,19 +164,21 @@
 
     // files is a FileList of File objects. List some properties.
     var output = [];
-    for (var i = 0, f; f = files[i]; i++) {
-      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+    for (var i = 0, f; f = files[i]; i++) 
+    {
+                  output.push('<li><strong>', escape(f.name), '</strong> (',                     f.type ||  'n/a', ') - ',
                   f.size, ' bytes, last modified: ',
                   f.lastModifiedDate.toLocaleDateString(), '</li>');
     }
-    document.getElementById('list3').innerHTML = '<ul>' + output.join('') + '</ul>';
-  }
+    document.getElementById('list3').innerHTML = '<ul>' + output.join('') +         '</ul>';
+}
 
-  function handleDragOver(evt) {
+  function handleDragOver(evt) 
+    {
     evt.stopPropagation();
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-  }
+    }
 
   // Setup the dnd listeners.
   var dropZone = document.getElementById('drop_zone');
@@ -173,10 +187,13 @@
 </script>
             
             </section>
+   
             <section> 
-                <h3> Überwachen des Lesefortschritts </h3>
+                <h3> Überwachen des Lesefortschritts - How </h3>
+                <hr/>
             <style>
-  #progress_bar {
+  #progress_bar 
+                {
     margin: 10px 0;
     padding: 3px;
     border: 1px solid #000;
@@ -186,15 +203,17 @@
     -moz-transition: opacity 1s linear;
     -o-transition: opacity 1s linear;
     -webkit-transition: opacity 1s linear;
-  }
-  #progress_bar.loading {
+                }
+  #progress_bar.loading
+                {
     opacity: 1.0;
-  }
-  #progress_bar .percent {
+                 }
+  #progress_bar .percent 
+                {
     background-color: #99ccff;
     height: auto;
     width: 0;
-  }
+                }
 </style>
 
 <input type="file" id="files4" name="file" />
@@ -205,12 +224,15 @@
   var reader;
   var progress = document.querySelector('.percent');
 
-  function abortRead() {
+  function abortRead() 
+    {
     reader.abort();
-  }
+    }
 
-  function errorHandler(evt) {
-    switch(evt.target.error.code) {
+  function errorHandler(evt) 
+{
+    switch(evt.target.error.code) 
+    {
       case evt.target.error.NOT_FOUND_ERR:
         alert('File Not Found!');
         break;
@@ -222,7 +244,7 @@
       default:
         alert('An error occurred reading this file.');
     };
-  }
+}
 
   function updateProgress(evt) {
     // evt is an ProgressEvent.
@@ -271,8 +293,7 @@
 				<section style="text-align: left;">
 					<h1>THE END</h1>
 					<p>
-						- <a href="http://slides.com">Try the online editor</a> <br>
-						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+						
 					</p>
 				</section>
 
